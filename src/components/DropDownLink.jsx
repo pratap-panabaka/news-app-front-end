@@ -4,9 +4,9 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-const CustomLink = (props) => {
+const DropDownLink = (props) => {
     const obj = props;
-    let { routeName, routeTo } = obj;
+    let { routeName, routeTo, onClick } = obj;
     const isActive = useMatch({
         path: useResolvedPath(routeTo).pathname,
         end: true,
@@ -22,11 +22,12 @@ const CustomLink = (props) => {
                 ,
                 "text-lite px-2 py-1 font-bold font-custom text-m-6",
             )}
+            onClick={onClick}
         >
             {routeName}
         </Link >
     );
 };
 
-export default CustomLink
+export default DropDownLink;
 

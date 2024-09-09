@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Details from "./pages/Details";
+import Headlines from "./pages/Headlines";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/details" element={<Details />} />
+        <Route path="/headlines" element={<Headlines />} />
       </Routes>
     </BrowserRouter>
   )
