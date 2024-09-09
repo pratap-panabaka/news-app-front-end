@@ -39,7 +39,7 @@ function News() {
                 }
             });
             const json = await response.json();
-            setArticles(json.articles.toReversed());
+            setArticles(json.articles);
         } catch (error) {
             console.log(error.message);
         }
@@ -58,8 +58,8 @@ function News() {
             {
                 articles && (
                     <div className="bg-toolite">
-                        <div className='max-width center-div gap-2 pt-2'>
-                            <form onSubmit={onSubmit} className="border border-2 p-5 justify-start flex flex-col gap-5 items-center">
+                        <div className='max-width center-div gap-2 p-2'>
+                            <form onSubmit={onSubmit} className="border-2 border-toodark p-5 justify-start flex flex-col gap-5 items-center w-full">
                                 <div className="flex gap-5">
                                     <select
                                         defaultValue={""}
@@ -86,13 +86,13 @@ function News() {
                                         }
                                     </select>
                                 </div>
-                                <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="search news with any key word" className="placeholder:text-black/20 p-2 flex justify-center" />
+                                <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="key words" className="placeholder:text-black/20 p-2 flex justify-center" />
                                 <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search News</button>
                             </form>
                             {
                                 articles.map((article, index) => (
                                     <div key={article.source.name + index}>
-                                        <div className="min-w-[300px] min-h-[400px] p-4 border-2 border-red-500 bg-lite">
+                                        <div className="min-w-[300px] min-h-[400px] p-4 border-2 border-toodark bg-lite">
                                             <h3 className="font-vortice text-sm">{article.title}</h3>
                                             <p>{article.description}</p>
                                             <img src={article.image} />

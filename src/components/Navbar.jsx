@@ -14,9 +14,9 @@ const Navbar = () => {
 
     return (
         <header className="bg-toodark sticky top-0 w-full z-50">
-            <nav className="h-16 w-full lg:max-w-6xl lg:mx-auto flex items-center p-2 desktop:max-w-5xl mx-auto">
-                <div className="hidden tablet:flex tablet:basis-1/3 desktop:basis-2/12 desktop:justify-start h-full justify-center items-center text-white font-bold font-vortice">
-                    Aconews!
+            <nav className="h-16 w-full lg:max-w-6xl lg:mx-auto flex justify-center items-center p-2 desktop:max-w-5xl mx-auto font-bold font-vortice">
+                <div className="tablet:basis-1/3 desktop:basis-2/12 desktop:justify-start flex h-full justify-center items-center text-center text-white">
+                    Aconews
                 </div>
                 <div className="flex -order-1 basis-1/2 tablet:basis-1/3 desktop:hidden text-white">
                     <GiHamburgerMenu className="hover:bg-lite hover:text-toodark p-2 cursor-pointer" fontSize={48} onClick={() => setShow(!show)} />
@@ -32,8 +32,8 @@ const Navbar = () => {
                         ))
                     }
                 </div>
-                <div className="basis-1/2 tablet:basis-1/3 flex h-full desktop:basis-2/12 justify-end w-full items-center text-xs text-white font-vortice">
-                    {new Date().toLocaleDateString('en-US', {weekday: 'long'})}
+                <div className="basis-1/2 tablet:basis-1/3 flex h-full desktop:basis-2/12 justify-end w-full items-center text-white text-xs">
+                    {new Date().toLocaleDateString('en-US', {month: 'short', day: '2-digit', year: '2-digit'})}
                 </div>
             </nav >
             {
