@@ -21,7 +21,7 @@
   [multiple],
   textarea,
   select {
-    @apply placeholder:text-gray-300 outline-none text-toodark font-bold border-none focus:border-none focus:ring-2 focus:ring-toodark
+    @apply placeholder:text-gray-300 outline-none text-toodark border-2 border-blue-500 font-bold focus:border-none focus:ring-2 focus:ring-toodark
   }
 
   [type='checkbox'],

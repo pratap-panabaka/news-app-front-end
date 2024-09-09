@@ -1,34 +1,43 @@
 import { useEffect, useState } from "react";
 import { categories, lang, countries } from "../dropDownMenus.js";
-import api from "../api.js";
 
 const Headlines = () => {
 
     const [articles, setArticles] = useState(null);
     const [loading, setLoading] = useState(null);
 
-    const [search, setSearch] = useState('');
-    const [category, setCategory] = useState(null);
-    const [language, setLanguage] = useState(null);
+    const [category, setCategory] = useState('general');
+    const [language, setLanguage] = useState('en');
+    const [country, setCountry] = useState('us');
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
-            const response = await fetch(`${api}`)
-            const json = await response.json()
-            console.log(json);
-            setArticles(json.articles);
-            setLoading(false);
+            try {
+                setLoading(true);
+                const response = await fetch('http://localhost:3003/headlines')
+                const json = await response.json()
+                console.log(json);
+                setArticles(json.articles);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+                setLoading(null);
+            }
         }
         fetchData();
     }, []);
 
-    const onSubmit = async (e) => {
+    const onChange = async (e) => {
         e.preventDefault();
+        console.log(e.target.value);
         try {
-            const response = await fetch(`${api}/query`, {
+            const response = await fetch('http://localhost:3003/headlines', {
                 method: 'POST',
-                body: JSON.stringify({ q: search, category }),
+                body: JSON.stringify({
+                    category: category || 'general',
+                    country: country || 'us',
+                    lang: language || 'en'
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -44,8 +53,8 @@ const Headlines = () => {
         <>
             {
                 loading && (
-                    <div>
-                        Loading...
+                    <div className="center-div">
+                        Fetching News...
                     </div>
                 )
             }
@@ -53,33 +62,46 @@ const Headlines = () => {
                 articles && (
                     <div className="bg-toolite">
                         <div className='max-width center-div justify-start flex gap-2 pt-2'>
-                            <form onSubmit={onSubmit}>
-                                <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="search news with any key word" className="placeholder:text-black/20 p-2" />
-                            </form>
-                            <select
-                                defaultValue={""}
-                                onChange={(e) => setCategory(e.target.value)}
-                                className="font-custom px-2 py-1 h-12"
-                            >
-                                <option value={""} disabled>Category</option>
-                                {
-                                    categories.map(cat => (
-                                        <option className="font-custom p-2" value={cat} key={cat}>{cat}</option>
-                                    ))
-                                }
-                            </select>
-                            <select
-                                defaultValue={""}
-                                onChange={(e) => setLang(e.target.value)}
-                                className="font-custom px-2 py-1 h-12"
-                            >
-                                <option value={""} disabled>Language</option>
-                                {
-                                    [...lang.entries()].map(([country, code]) => (
-                                        <option className="font-custom p-2" value={code} key={code}>{country}</option>
-                                    ))
-                                }
-                            </select>
+                            <div className="border border-2 p-5 justify-start flex flex-col gap-5 items-center">
+                                <div className="flex gap-5">
+                                    <select
+                                        defaultValue={""}
+                                        onChange={(e) => {setLanguage(e.target.value) && onChange}}
+                                        className="font-custom px-2 py-1 h-12"
+                                    >
+                                        <option value={""} disabled>Language</option>
+                                        {
+                                            [...lang.entries()].map(([language, code]) => (
+                                                <option className="font-custom p-2" value={code} key={code}>{language}</option>
+                                            ))
+                                        }
+                                    </select>
+                                    <select
+                                        defaultValue={""}
+                                        onChange={(e) => {setCountry(e.target.value) && onChange}}
+                                        className="font-custom px-2 py-1 h-12"
+                                    >
+                                        <option value={""} disabled>Country</option>
+                                        {
+                                            [...countries.entries()].map(([country, code]) => (
+                                                <option className="font-custom p-2" value={code} key={code}>{country}</option>
+                                            ))
+                                        }
+                                    </select>
+                                    <select
+                                        defaultValue={""}
+                                        onChange={(e) => {setCategory(e.target.value) && onChange}}
+                                        className="font-custom px-2 py-1 h-12"
+                                    >
+                                        <option value={""} disabled>Category</option>
+                                        {
+                                            categories.map(category => (
+                                                <option className="font-custom p-2" value={category} key={category}>{category}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
+                            </div>
                             {
                                 articles.map((article, index) => (
                                     <div key={article.source.name + index}>
