@@ -14,9 +14,8 @@ const Headlines = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:3003/headlines')
-                const json = await response.json()
-                console.log(json);
+                const response = await fetch('https://pratap-panabaka-express-api.netlify.app/headlines');
+                const json = await response.json();
                 setArticles(json.articles);
                 setLoading(null);
             } catch (error) {
@@ -66,7 +65,7 @@ const Headlines = () => {
                         <div className='max-width center-div justify-start flex gap-2 p-2'>
                             <div className="border-2 border-toodark p-5 justify-start flex flex-col gap-5 items-center w-full">
                                 <div className="flex flex-col desktop:flex-row gap-5 desktop:items-center">
-                                    <h3 className="font-bold font-custom text-lg">Filter News By</h3>
+                                    <h3 className="font-bold font-custom text-lg">Filter Headlines By</h3>
                                     <select
                                         defaultValue={""}
                                         onChange={(e) => {
@@ -108,7 +107,7 @@ const Headlines = () => {
                                         <option value={""} disabled>Category</option>
                                         {
                                             categories.map(category => (
-                                                <option className="font-custom p-2" value={category} key={category}>{category}</option>
+                                                <option className="font-custom p-2 capitalize" value={category} key={category}>{category}</option>
                                             ))
                                         }
                                     </select>

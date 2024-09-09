@@ -16,7 +16,6 @@ function News() {
                 setLoading(true);
                 const response = await fetch('http://localhost:3003/news');
                 const json = await response.json();
-                console.log(json);
                 setArticles(json.articles);
                 setLoading(false);
             } catch (error) {
@@ -31,7 +30,7 @@ function News() {
         e.preventDefault();
         console.log(search, language, country);
         try {
-            const response = await fetch('http://localhost:3003/news', {
+            const response = await fetch('https://pratap-panabaka-express-api.netlify.app/news', {
                 method: 'POST',
                 body: JSON.stringify({ q: search || 'software', lang: language, country }),
                 headers: {
