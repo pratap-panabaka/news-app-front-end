@@ -14,7 +14,7 @@ function News() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:3003/news');
+                const response = await fetch('https://pratap-panabaka-express-api.netlify.app/news');
                 const json = await response.json();
                 setArticles(json.articles);
                 setLoading(false);

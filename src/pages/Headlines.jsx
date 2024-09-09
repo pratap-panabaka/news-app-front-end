@@ -29,7 +29,7 @@ const Headlines = () => {
     const onChange = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:3003/headlines', {
+            const response = await fetch('https://pratap-panabaka-express-api.netlify.app/headlines', {
                 method: 'POST',
                 body: JSON.stringify({
                     category: category || 'general',
