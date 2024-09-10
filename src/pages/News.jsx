@@ -31,7 +31,7 @@ function News() {
     const onSubmit = async (e) => {
         e.preventDefault();
         const obj = {}
-        obj.q = search || 'tech industry';
+        obj.q = search || 'software';
         if (language) {
             obj.lang = language;
         }
