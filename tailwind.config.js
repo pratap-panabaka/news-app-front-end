@@ -18,8 +18,7 @@ export default {
         pad: "#EF8354"
       },
       fontFamily: {
-        custom: ['"mukta"', "sans-serif"],
-        roboto: ['"roboto"', "sans-serif"],
+        poppins: ['"poppins"', "sans-serif"],
         vortice: ['"vortice-concept"', "sans-serif"],
       },
       boxShadow: {

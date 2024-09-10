@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { categories, lang, countries } from "../dropDownMenus.js";
 import { API } from "../API.js";
+import ArticleCard from "../components/ArticleCard.jsx";
 
 const Headlines = () => {
 
     const [articles, setArticles] = useState(null);
     const [loading, setLoading] = useState(null);
 
-    const [category, setCategory] = useState('general');
-    const [language, setLanguage] = useState('en');
-    const [country, setCountry] = useState('us');
+    const [category, setCategory] = useState(null);
+    const [language, setLanguage] = useState(null);
+    const [country, setCountry] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,37 +28,50 @@ const Headlines = () => {
         fetchData();
     }, []);
 
-    const onChange = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(`${API}/headlines`, {
-                mode: "cors",
-                method: 'POST',
-                body: JSON.stringify({
-                    category: category || 'general',
-                    country: country || 'us',
-                    lang: language || 'en'
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            const json = await response.json();
-            console.log(json);
-            setArticles(json.articles);
-            setLoading(null);
-        } catch (error) {
-            console.log(error.message);
-            setLoading(null);
+    useEffect(() => {
+        const onChange = async () => {
+            const obj = {}
+            if (category) {
+                obj.category = category;
+            }
+            if (country) {
+                obj.country = country;
+            }
+            if (language) {
+                obj.lang = language;
+            }
+
+            console.log(obj);
+
+            try {
+                setLoading(true);
+                const response = await fetch(`${API}/headlines`, {
+                    mode: "cors",
+                    method: 'POST',
+                    body: JSON.stringify(obj),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                const json = await response.json();
+                setArticles(json.articles);
+                setLoading(null);
+            } catch (error) {
+                console.log(error.message);
+                setLoading(null);
+            }
         }
-    }
+
+        onChange();
+
+    }, [language, country, category]);
 
     return (
         <>
             {
                 loading && (
-                    <div className="center-div">
-                        Fetching News...
+                    <div className="center-div text-2xl">
+                        Fetching Headlines...
                     </div>
                 )
             }
@@ -67,16 +81,14 @@ const Headlines = () => {
                         <div className='max-width center-div justify-start flex gap-2 p-2'>
                             <div className="border p-2 justify-start flex flex-col gap-5 items-center w-full">
                                 <div className="flex flex-col desktop:flex-row gap-5 desktop:items-center">
-                                    <h3 className="font-bold font-roboto text-lg">Filter Headlines By</h3>
+                                    <h3 className="font-bold font-poppins text-lg">Filter Headlines By</h3>
                                     <select
+                                        id="language"
                                         defaultValue={""}
-                                        onChange={(e) => {
-                                            setLanguage(e.target.value);
-                                            onChange();
-                                        }}
+                                        onChange={(e) => setLanguage(e.target.value)}
                                         className="font-custom px-2 py-1 h-12"
                                     >
-                                        <option value={""} disabled>Language</option>
+                                        <option value={""}>Language</option>
                                         {
                                             [...lang.entries()].map(([language, code]) => (
                                                 <option className="font-custom p-2" value={code} key={code}>{language}</option>
@@ -84,14 +96,12 @@ const Headlines = () => {
                                         }
                                     </select>
                                     <select
+                                        id="country"
                                         defaultValue={""}
-                                        onChange={(e) => {
-                                            setCountry(e.target.value);
-                                            onChange();
-                                        }}
+                                        onChange={(e) => setCountry(e.target.value)}
                                         className="font-custom px-2 py-1 h-12"
                                     >
-                                        <option value={""} disabled>Country</option>
+                                        <option value={""}>Country</option>
                                         {
                                             [...countries.entries()].map(([country, code]) => (
                                                 <option className="font-custom p-2" value={code} key={code}>{country}</option>
@@ -99,14 +109,12 @@ const Headlines = () => {
                                         }
                                     </select>
                                     <select
+                                        id="category"
                                         defaultValue={""}
-                                        onChange={(e) => {
-                                            setCategory(e.target.value);
-                                            onChange();
-                                        }}
+                                        onChange={(e) => setCategory(e.target.value)}
                                         className="font-custom px-2 py-1 h-12"
                                     >
-                                        <option value={""} disabled>Category</option>
+                                        <option value={""}>Category</option>
                                         {
                                             categories.map(category => (
                                                 <option className="font-custom p-2 capitalize" value={category} key={category}>{category}</option>
@@ -115,17 +123,7 @@ const Headlines = () => {
                                     </select>
                                 </div>
                             </div>
-                            {
-                                articles.map((article, index) => (
-                                    <div key={article.source.name + index}>
-                                        <div className="w-full min-h-[400px] p-4 flex flex-col gap-2 border">
-                                            <h3 className="font-roboto text-lg font-bold">{article.title}</h3>
-                                            <p className="font-roboto">{article.description}</p>
-                                            <img src={article.image} className="w-[60%] flex mx-auto justify-center items-center" />
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                            <ArticleCard articles={articles} />
                         </div>
                     </div>
                 )

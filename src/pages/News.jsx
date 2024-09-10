@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { countries, lang } from "../dropDownMenus";
 import { API } from "../API";
+import ArticleCard from "../components/ArticleCard";
 
 function News() {
 
@@ -8,8 +9,8 @@ function News() {
     const [loading, setLoading] = useState(null);
 
     const [search, setSearch] = useState(null);
-    const [language, setLanguage] = useState('en');
-    const [country, setCountry] = useState('us');
+    const [language, setLanguage] = useState(null);
+    const [country, setCountry] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,7 +21,7 @@ function News() {
                 setArticles(json.articles);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                console.log(error.message);
                 setLoading(null);
             }
         }
@@ -29,20 +30,31 @@ function News() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(search, language, country);
+        const obj = {}
+        obj.q = search || 'tech industry';
+        if (language) {
+            obj.lang = language;
+        }
+        if (country) {
+            obj.country = country
+        }
+        console.log(obj);
         try {
+            setLoading(true);
             const response = await fetch(`${API}/news`, {
                 mode: "cors",
                 method: 'POST',
-                body: JSON.stringify({ q: search || 'software', lang: language, country }),
+                body: JSON.stringify(obj),
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
             const json = await response.json();
             setArticles(json.articles);
+            setLoading(null);
         } catch (error) {
             console.log(error.message);
+            setLoading(null);
         }
     }
 
@@ -50,7 +62,7 @@ function News() {
         <>
             {
                 loading && (
-                    <div className="center-div">
+                    <div className="center-div text-2xl">
                         Fetching News...
                     </div>
                 )
@@ -67,7 +79,7 @@ function News() {
                                         onChange={(e) => setLanguage(e.target.value)}
                                         className="font-custom px-2 py-1 h-12"
                                     >
-                                        <option value={""} disabled>Language</option>
+                                        <option value={""}>Language</option>
                                         {
                                             [...lang.entries()].map(([language, code]) => (
                                                 <option className="font-custom p-2" value={code} key={code}>{language}</option>
@@ -79,7 +91,7 @@ function News() {
                                         onChange={(e) => setCountry(e.target.value)}
                                         className="font-custom px-2 py-1 h-12"
                                     >
-                                        <option value={""} disabled>Country</option>
+                                        <option value={""}>Country</option>
                                         {
                                             [...countries.entries()].map(([country, code]) => (
                                                 <option className="font-custom p-2" value={code} key={code}>{country}</option>
@@ -92,17 +104,7 @@ function News() {
                                     <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search News</button>
                                 </div>
                             </form>
-                            {
-                                articles.map((article, index) => (
-                                    <div key={article.source.name + index}>
-                                        <div className="w-full min-h-[400px] p-4 flex flex-col gap-2 border">
-                                            <h3 className="font-roboto text-lg font-bold">{article.title}</h3>
-                                            <p className="font-roboto">{article.description}</p>
-                                            <img src={article.image} className="w-[60%] flex mx-auto justify-center items-center" />
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                            <ArticleCard articles={articles} />
                         </div>
                     </div>
                 )
