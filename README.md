@@ -15,6 +15,7 @@ cd news-app-front-end
 npm install
 npm run dev
 ```
+
 ![image](https://github.com/user-attachments/assets/c289fcb8-6a37-4563-8a63-ec85f2f99489)
 
 ![image](https://github.com/user-attachments/assets/da498b60-ac00-4233-989b-04d4f28b3d63)
@@ -48,6 +49,9 @@ GET method with default query parameters and POST method will call GNEWS api wit
 4. When users searches with key words and filters with language and country in the "news" page and hit "search news" button. A request will go to express with these search parameters
 and state of the articles will update based on the response and renders the new fetchd data.
 5. On the headlines page, when users filters any one from category, language or country, a call to backend will go to fetch the data from "top-headlines" end point with filtered query parameters.
+6. About pagination: Since the GNews API will return only 10 results per request, I did not implement pagination. But you can see how I implemented in my other project where
+the results are around 50k from this [link](https://github.com/PRATAP-KUMAR/metrics-web-app/blob/3cf59ead9ada80dae79091b10a61a8a7427fbea8/src/pages/Home.jsx#L113) and from this [Link](https://pratap-panabaka-metrics-web-app.netlify.app/)
+   
 
 ### Firebase Deployment (Frontend)
 1. This is my first time using Firebase
