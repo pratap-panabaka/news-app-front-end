@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { categories, lang, countries } from "../dropDownMenus.js";
+import { API } from "../API.js";
 
 const Headlines = () => {
 
@@ -14,7 +15,7 @@ const Headlines = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('https://pratap-panabaka-express-api.netlify.app/headlines');
+                const response = await fetch(`${API}/headlines`);
                 const json = await response.json();
                 setArticles(json.articles);
                 setLoading(null);
@@ -29,7 +30,8 @@ const Headlines = () => {
     const onChange = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://pratap-panabaka-express-api.netlify.app/headlines', {
+            const response = await fetch(`${API}/headlines`, {
+                mode: "no-cors",
                 method: 'POST',
                 body: JSON.stringify({
                     category: category || 'general',

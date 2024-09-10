@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { countries, lang } from "../dropDownMenus";
+import { API } from "../API";
 
 function News() {
 
@@ -14,7 +15,7 @@ function News() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('https://pratap-panabaka-express-api.netlify.app/news');
+                const response = await fetch(`${API}/news`);
                 const json = await response.json();
                 setArticles(json.articles);
                 setLoading(false);
@@ -30,7 +31,8 @@ function News() {
         e.preventDefault();
         console.log(search, language, country);
         try {
-            const response = await fetch('https://pratap-panabaka-express-api.netlify.app/news', {
+            const response = await fetch(`${API}/news`, {
+                mode: "cors",
                 method: 'POST',
                 body: JSON.stringify({ q: search || 'software', lang: language, country }),
                 headers: {
