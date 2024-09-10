@@ -5,7 +5,7 @@
 ### Prerequisite packages
 
 1. You need to setup backend (server) first to use the frontend. [Guide to setup server](https://github.com/PRATAP-KUMAR/news-app-back-end)
-2. [Frontend link](https://pratap-panabaka-aconews.web.app/)
+2. [Live link](https://pratap-panabaka-aconews.web.app/)
 
 ### If you need to update the frontend
 
