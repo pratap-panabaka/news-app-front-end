@@ -31,7 +31,7 @@ const Headlines = () => {
         try {
             setLoading(true);
             const response = await fetch(`${API}/headlines`, {
-                mode: "no-cors",
+                mode: "cors",
                 method: 'POST',
                 body: JSON.stringify({
                     category: category || 'general',
