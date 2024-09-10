@@ -60,7 +60,7 @@ function News() {
                 articles && (
                     <div className="bg-toolite">
                         <div className='max-width center-div gap-2 p-2'>
-                            <form onSubmit={onSubmit} className="border-2 border-toodark p-5 justify-start flex flex-col gap-5 items-center w-full">
+                            <form onSubmit={onSubmit} className="border p-2 justify-start flex flex-col desktop:flex-row gap-5 items-center w-full">
                                 <div className="flex gap-5">
                                     <select
                                         defaultValue={""}
@@ -87,16 +87,18 @@ function News() {
                                         }
                                     </select>
                                 </div>
-                                <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="key words" className="placeholder:text-black/20 p-2 flex justify-center" />
-                                <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search News</button>
+                                <div className="flex gap-5">
+                                    <input type="text" onChange={(e) => setSearch(e.target.value)} placeholder="ex: tech industry" className="placeholder:text-black/20 p-2 flex justify-center" />
+                                    <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search News</button>
+                                </div>
                             </form>
                             {
                                 articles.map((article, index) => (
                                     <div key={article.source.name + index}>
-                                        <div className="min-w-[300px] min-h-[400px] p-4 border-2 border-toodark bg-lite">
-                                            <h3 className="font-vortice text-sm">{article.title}</h3>
-                                            <p>{article.description}</p>
-                                            <img src={article.image} />
+                                        <div className="w-full min-h-[400px] p-4 flex flex-col gap-2 border">
+                                            <h3 className="font-roboto text-lg font-bold">{article.title}</h3>
+                                            <p className="font-roboto">{article.description}</p>
+                                            <img src={article.image} className="w-[60%] flex mx-auto justify-center items-center" />
                                         </div>
                                     </div>
                                 ))

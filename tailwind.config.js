@@ -19,6 +19,7 @@ export default {
       },
       fontFamily: {
         custom: ['"mukta"', "sans-serif"],
+        roboto: ['"roboto"', "sans-serif"],
         vortice: ['"vortice-concept"', "sans-serif"],
       },
       boxShadow: {
