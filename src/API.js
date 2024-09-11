@@ -1,2 +1,2 @@
-// export const API = "https://pratap-panabaka-express-api.netlify.app"
-export const API = "http://localhost:3003"
+export const API = "https://pratap-panabaka-aconews-api.netlify.app/.netlify/functions/api/"
+// export const API = "http://localhost:3003"
