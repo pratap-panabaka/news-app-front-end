@@ -1,3 +1,9 @@
+### Edit Sep 11th 14:49 PM
+
+1. Backend (express server) Deployed Successfully with Netlify.  
+2. The Frontend is now live without need for running backend(server) locally.  
+3. You can just click the [Live link](https://pratap-panabaka-aconews.web.app/) Thats it.
+
 # News App
 
 [Link to Backend](https://github.com/PRATAP-KUMAR/news-app-back-end)
