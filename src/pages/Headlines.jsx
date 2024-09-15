@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { categories, lang, countries } from "../dropDownMenus.js";
 import { API } from "../API.js";
 import ArticleCard from "../components/ArticleCard.jsx";
+import { useHeadlinesContext } from "../hooks/useHeadlinesContext.js";
 
 const Headlines = () => {
 
-    const [articles, setArticles] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const {
+        articles, setArticles,
+        language, setLanguage,
+        country, setCountry,
+        category, setCategory,
+        search, setSearch
+    } = useHeadlinesContext();
 
-    const [category, setCategory] = useState(null);
-    const [language, setLanguage] = useState(null);
-    const [country, setCountry] = useState(null);
+    const [loading, setLoading] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,46 +29,47 @@ const Headlines = () => {
                 setLoading(null);
             }
         }
-        fetchData();
-    }, []);
+        if (!articles) {
+            fetchData();
+        }
+    }, [articles, setArticles]);
 
-    useEffect(() => {
-        const onChange = async () => {
-            const obj = {}
-            if (category) {
-                obj.category = category;
-            }
-            if (country) {
-                obj.country = country;
-            }
-            if (language) {
-                obj.lang = language;
-            }
+    const onSearch = async (e) => {
+        e.preventDefault();
 
-            console.log(obj);
-
-            try {
-                setLoading(true);
-                const response = await fetch(`${API}/headlines`, {
-                    mode: "cors",
-                    method: 'POST',
-                    body: JSON.stringify(obj),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-                const json = await response.json();
-                setArticles(json.articles);
-                setLoading(null);
-            } catch (error) {
-                console.log(error.message);
-                setLoading(null);
-            }
+        const obj = {}
+        if (category) {
+            obj.category = category;
+        }
+        if (country) {
+            obj.country = country;
+        }
+        if (language) {
+            obj.lang = language;
+        }
+        if (search) {
+            obj.q = search;
         }
 
-        onChange();
+        console.log(obj);
 
-    }, [language, country, category]);
+        try {
+            setLoading(true);
+            const response = await fetch(`${API}/headlines`, {
+                method: 'POST',
+                body: JSON.stringify(obj),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const json = await response.json();
+            setArticles(json.articles);
+            setLoading(null);
+        } catch (error) {
+            console.log(error.message);
+            setLoading(null);
+        }
+    }
 
     return (
         <>
@@ -77,54 +82,65 @@ const Headlines = () => {
             }
             {
                 articles && (
-                    <div className="bg-toolite">
-                        <div className='max-width center-div justify-start flex gap-2 p-2'>
+                    <div className='max-width center-div justify-start flex gap-2 p-2'>
+                        <form className="bg-toolite w-full" onSubmit={onSearch}>
                             <div className="border p-2 justify-start flex flex-col gap-5 items-center w-full">
-                                <div className="flex flex-col desktop:flex-row gap-5 desktop:items-center">
-                                    <h3 className="font-bold font-poppins text-lg">Filter Headlines By</h3>
-                                    <select
-                                        id="language"
-                                        defaultValue={""}
-                                        onChange={(e) => setLanguage(e.target.value)}
-                                        className="font-custom px-2 py-1 h-12"
-                                    >
-                                        <option value={""}>Language</option>
-                                        {
-                                            [...lang.entries()].map(([language, code]) => (
-                                                <option className="font-custom p-2" value={code} key={code}>{language}</option>
-                                            ))
-                                        }
-                                    </select>
-                                    <select
-                                        id="country"
-                                        defaultValue={""}
-                                        onChange={(e) => setCountry(e.target.value)}
-                                        className="font-custom px-2 py-1 h-12"
-                                    >
-                                        <option value={""}>Country</option>
-                                        {
-                                            [...countries.entries()].map(([country, code]) => (
-                                                <option className="font-custom p-2" value={code} key={code}>{country}</option>
-                                            ))
-                                        }
-                                    </select>
-                                    <select
-                                        id="category"
-                                        defaultValue={""}
-                                        onChange={(e) => setCategory(e.target.value)}
-                                        className="font-custom px-2 py-1 h-12"
-                                    >
-                                        <option value={""}>Category</option>
-                                        {
-                                            categories.map(category => (
-                                                <option className="font-custom p-2 capitalize" value={category} key={category}>{category}</option>
-                                            ))
-                                        }
-                                    </select>
+                                <div className="flex flex-col gap-5 desktop:items-center">
+                                    <div className="flex flex-col desktop:flex-row gap-5">
+                                        <div className="flex flex-col gap-1">
+                                            <label htmlFor="language" className="text-blue-500 font-bold">Select Language</label>
+                                            <select
+                                                id="language"
+                                                defaultValue={language}
+                                                onChange={(e) => setLanguage(e.target.value)}
+                                                className="font-custom px-2 py-1 h-12"
+                                            >
+                                                {
+                                                    [...lang.entries()].map(([language, code]) => (
+                                                        <option className="font-custom p-2" value={code} key={code}>{language}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <label htmlFor="country" className="text-blue-500 font-bold">Select Country</label>
+                                            <select
+                                                id="country"
+                                                defaultValue={country}
+                                                onChange={(e) => setCountry(e.target.value)}
+                                                className="font-custom px-2 py-1 h-12"
+                                            >
+                                                {
+                                                    [...countries.entries()].map(([country, code]) => (
+                                                        <option className="font-custom p-2" value={code} key={code}>{country}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <label htmlFor="category" className="text-blue-500 font-bold">Select Category</label>
+                                            <select
+                                                id="category"
+                                                defaultValue={category}
+                                                onChange={(e) => setCategory(e.target.value)}
+                                                className="font-custom px-2 py-1 h-12 capitalize"
+                                            >
+                                                {
+                                                    categories.map(category => (
+                                                        <option className="font-custom p-2 capitalize" value={category} key={category}>{category}</option>
+                                                    ))
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-5">
+                                        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="placeholder:text-black/20 p-2 flex justify-center" />
+                                        <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search Headlines</button>
+                                    </div>
                                 </div>
                             </div>
-                            <ArticleCard articles={articles} />
-                        </div>
+                        </form>
+                        <ArticleCard articles={articles} />
                     </div>
                 )
             }

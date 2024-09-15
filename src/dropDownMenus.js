@@ -1,6 +1,7 @@
 const categories = ["general", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
 
 const lang = new Map([
+    ['Any', 'any'],
     ['Arabic', 'ar'],
     ['Chinese', 'zh'],
     ['Dutch', 'nl'],
@@ -26,6 +27,7 @@ const lang = new Map([
 ])
 
 const countries = new Map([
+    ['Any', 'any'],
     ['Australia', 'au'],
     ['Brazil', 'br'],
     ['Canada', 'ca'],
