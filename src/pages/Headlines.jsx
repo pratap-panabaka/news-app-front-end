@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { categories, lang, countries } from "../dropDownMenus.js";
 import { API } from "../API.js";
 import ArticleCard from "../components/ArticleCard.jsx";
@@ -16,43 +16,13 @@ const Headlines = () => {
 
     const [loading, setLoading] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch(`${API}/headlines`);
-                const json = await response.json();
-                setArticles(json.articles);
-                setLoading(null);
-            } catch (error) {
-                console.log(error);
-                setLoading(null);
-            }
-        }
-        if (!articles) {
-            fetchData();
-        }
-    }, [articles, setArticles]);
-
-    const onSearch = async (e) => {
-        e.preventDefault();
-
+    const fetchData = useCallback(async () => {
         const obj = {}
-        if (category) {
-            obj.category = category;
-        }
-        if (country) {
-            obj.country = country;
-        }
-        if (language) {
-            obj.lang = language;
-        }
-        if (search) {
-            obj.q = search;
-        }
-
+        obj.lang = language;
+        obj.country = country;
+        obj.category = category;
+        obj.q = search;
         console.log(obj);
-
         try {
             setLoading(true);
             const response = await fetch(`${API}/headlines`, {
@@ -66,9 +36,20 @@ const Headlines = () => {
             setArticles(json.articles);
             setLoading(null);
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
             setLoading(null);
         }
+    }, [country, language, category, search, setArticles]);
+
+    useEffect(() => {
+        if (!articles) {
+            fetchData();
+        }
+    }, [articles, fetchData]);
+
+    const onSearch = async (e) => {
+        e.preventDefault();
+        fetchData();
     }
 
     return (

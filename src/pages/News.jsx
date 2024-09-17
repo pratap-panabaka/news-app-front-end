@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNewsContext } from "../hooks/useNewsContext";
 import { API } from "../API";
 import { countries, lang } from "../dropDownMenus";
@@ -15,36 +15,11 @@ function News() {
 
     const [loading, setLoading] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch(`${API}/news`);
-                const json = await response.json();
-                setArticles(json.articles);
-                setLoading(null);
-            } catch (error) {
-                console.log(error.message);
-                setLoading(null);
-            }
-        }
-        if (!articles) {
-            fetchData();
-        }
-    }, [articles, setArticles]);
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const fetchData = useCallback(async () => {
         const obj = {}
-        if (language) {
-            obj.lang = language;
-        }
-        if (country) {
-            obj.country = country;
-        }
-        if(search) {
-            obj.q = search;
-        }
+        obj.lang = language;
+        obj.country = country;
+        obj.q = search;
         console.log(obj);
         try {
             setLoading(true);
@@ -62,6 +37,17 @@ function News() {
             console.log(error);
             setLoading(null);
         }
+    }, [country, language, search, setArticles]);
+
+    useEffect(() => {
+        if (!articles) {
+            fetchData();
+        }
+    }, [articles, fetchData]);
+
+    const onSearch = async (e) => {
+        e.preventDefault();
+        fetchData();
     }
 
     return (
@@ -76,7 +62,7 @@ function News() {
             {
                 articles && (
                     <div className='max-width center-div justify-start flex gap-2 p-2'>
-                        <form className="bg-toolite w-full" onSubmit={onSubmit}>
+                        <form className="bg-toolite w-full" onSubmit={onSearch}>
                             <div className="border p-2 justify-start flex flex-col gap-5 items-center w-full">
                                 <div className="flex flex-col gap-5 desktop:items-center">
                                     <div className="flex flex-col desktop:flex-row gap-5">
