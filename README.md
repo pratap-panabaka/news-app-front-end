@@ -1,6 +1,6 @@
 # News App
 
-[Link to Backend](https://github.com/PRATAP-KUMAR/news-app-back-end)
+[Link to Backend Repo](https://github.com/PRATAP-KUMAR/news-app-back-end)
 
 ### If you need to update the frontend
 
