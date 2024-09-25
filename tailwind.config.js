@@ -18,8 +18,8 @@ export default {
         pad: "#EF8354"
       },
       fontFamily: {
-        poppins: ['"poppins"', "sans-serif"],
-        vortice: ['"vortice-concept"', "sans-serif"],
+        sans: ['"poppins"', "sans-serif"],
+        custom: ['"palanquin-dark"', 'sans-serif']
       },
       boxShadow: {
         'custom': '4px 4px 4px 4px rgba(22, 72, 99, 1)',

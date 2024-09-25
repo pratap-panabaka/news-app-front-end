@@ -15,9 +15,13 @@ const Navbar = () => {
     return (
         <header className="bg-toodark sticky top-0 w-full z-50">
             <nav className="h-16 w-full lg:max-w-6xl lg:mx-auto flex justify-center items-center p-2 desktop:max-w-5xl mx-auto font-bold font-vortice">
-                <div className="tablet:basis-1/3 desktop:basis-2/12 desktop:justify-start flex h-full justify-center items-center text-center text-green-500">
-                    Aconews
-                </div>
+                <a className="tablet:basis-1/3 desktop:basis-2/12 desktop:justify-start flex h-full justify-center items-center font-custom text-center text-white"
+                    href="https://pratap.live"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    PRATAP
+                </a>
                 <div className="flex -order-1 basis-1/2 tablet:basis-1/3 desktop:hidden text-white">
                     <GiHamburgerMenu className="hover:bg-lite hover:text-toodark p-2 cursor-pointer" fontSize={48} onClick={() => setShow(!show)} />
                 </div>
@@ -32,8 +36,8 @@ const Navbar = () => {
                         ))
                     }
                 </div>
-                <div className="basis-1/2 tablet:basis-1/3 flex h-full desktop:basis-2/12 justify-end w-full items-center text-yellow-500 text-[10px] tablet:text-xs">
-                    {new Date().toLocaleDateString('en-US', {month: 'short', day: '2-digit', year: 'numeric'})}
+                <div className="basis-1/2 tablet:basis-1/3 flex h-full desktop:basis-2/12 justify-end w-full items-center text-white tablet:text-xs">
+                    {new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}
                 </div>
             </nav >
             {

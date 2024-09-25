@@ -20,7 +20,7 @@ const CustomLink = (props) => {
                     ? "text-pad"
                     : "hover:text-white"
                 ,
-                "text-sm text-lite px-2 py-1 font-bold font-vortice",
+                "text-sm text-lite px-2 py-1 font-custom text-lg",
             )}
         >
             {routeName}
