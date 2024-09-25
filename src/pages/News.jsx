@@ -96,7 +96,7 @@ function News() {
                                         </div>
                                     </div>
                                     <div className="flex gap-5">
-                                        <input required type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="placeholder:text-black/20 p-2 flex justify-center" />
+                                        <input required type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="text-center placeholder:text-black/20 p-2 flex justify-center" />
                                         <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search News</button>
                                     </div>
                                 </div>

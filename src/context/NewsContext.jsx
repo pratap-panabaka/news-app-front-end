@@ -4,8 +4,8 @@ const NewsContext = createContext(null);
 
 const NewsContextProvider = ({ children }) => {
     const [articles, setArticles] = useState(null);
-    const [language, setLanguage] = useState("Any");
-    const [country, setCountry] = useState("Any");
+    const [language, setLanguage] = useState("en");
+    const [country, setCountry] = useState("any");
     const [search, setSearch] = useState("technology");
 
     return (

@@ -20,7 +20,7 @@ const DropDownLink = (props) => {
                     ? "text-pad"
                     : "hover:text-white"
                 ,
-                "text-lite px-2 py-1 font-bold font-vortice",
+                "text-sm text-lite px-2 py-1 font-bold font-vortice",
             )}
             onClick={onClick}
         >

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "pratap-panabaka-news",
     "public": "dist",
     "ignore": [
       "firebase.json",
