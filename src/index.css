@@ -21,7 +21,7 @@
   [multiple],
   textarea,
   select {
-    @apply placeholder:text-gray-300 outline-none text-toodark border font-bold focus:border-none focus:ring-2 focus:ring-toodark
+    @apply placeholder:text-gray-300 outline-none text-blue-500 border font-bold focus:border-none focus:ring-2 focus:ring-toodark
   }
 
   [type='checkbox'],
@@ -44,6 +44,14 @@
   }
 
   .btn {
-    @apply outline-none px-4 py-2 bg-toolite text-toodark hover:bg-lite hover:text-dark font-bold
+    @apply p-2 bg-toodark text-white font-bold font-custom w-fit mx-auto
+  }
+
+  label {
+    @apply text-sm text-orange-500
+  }
+
+  select {
+    @apply text-blue-500 py-1
   }
 }

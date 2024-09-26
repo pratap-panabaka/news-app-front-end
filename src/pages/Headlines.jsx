@@ -33,6 +33,7 @@ const Headlines = () => {
                 }
             });
             const json = await response.json();
+            console.log(json);
             setArticles(json.articles);
             setLoading(null);
         } catch (error) {
@@ -69,12 +70,11 @@ const Headlines = () => {
                                 <div className="flex flex-col gap-5 desktop:items-center">
                                     <div className="flex flex-col desktop:flex-row gap-5">
                                         <div className="flex flex-col gap-1">
-                                            <label htmlFor="language" className="text-blue-500 font-bold">Select Language</label>
+                                            <label htmlFor="language">Select Language</label>
                                             <select
                                                 id="language"
                                                 defaultValue={language}
                                                 onChange={(e) => setLanguage(e.target.value)}
-                                                className="font-custom px-2 py-1 h-12"
                                             >
                                                 {
                                                     [...lang.entries()].map(([language, code]) => (
@@ -84,12 +84,11 @@ const Headlines = () => {
                                             </select>
                                         </div>
                                         <div className="flex flex-col gap-1">
-                                            <label htmlFor="country" className="text-blue-500 font-bold">Select Country</label>
+                                            <label htmlFor="country">Select Country</label>
                                             <select
                                                 id="country"
                                                 defaultValue={country}
                                                 onChange={(e) => setCountry(e.target.value)}
-                                                className="font-custom px-2 py-1 h-12"
                                             >
                                                 {
                                                     [...countries.entries()].map(([country, code]) => (
@@ -99,16 +98,16 @@ const Headlines = () => {
                                             </select>
                                         </div>
                                         <div className="flex flex-col gap-1">
-                                            <label htmlFor="category" className="text-blue-500 font-bold">Select Category</label>
+                                            <label htmlFor="category">Select Category</label>
                                             <select
                                                 id="category"
                                                 defaultValue={category}
                                                 onChange={(e) => setCategory(e.target.value)}
-                                                className="font-custom px-2 py-1 h-12 capitalize"
+                                                className="capitalize"
                                             >
                                                 {
                                                     categories.map(category => (
-                                                        <option className="font-custom p-2 capitalize" value={category} key={category}>{category}</option>
+                                                        <option className="capitalize" value={category} key={category}>{category}</option>
                                                     ))
                                                 }
                                             </select>
@@ -116,13 +115,18 @@ const Headlines = () => {
                                     </div>
                                     <div className="flex gap-5">
                                         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="placeholder:text-black/20 p-2 flex justify-center" />
-                                        <button type="submit" className="px-4 py-2 border-2 bg-toodark text-white font-bold font-custom">Search Headlines</button>
+                                        <button type="submit" className="btn">Search Headlines</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <ArticleCard articles={articles} />
                     </div>
+                )
+            }
+            {
+                !articles && (
+                    <h2 className="center-div font-bold">Sorry there seems to be fetching error. Please visit <span><a href="https://gnews.io" target="_blank" rel="noreferrer" className="text-blue-500 hover:text-red-500">GNews Website</a></span></h2>
                 )
             }
         </>
