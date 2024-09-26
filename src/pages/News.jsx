@@ -56,7 +56,7 @@ function News() {
             {
                 loading && (
                     <div className="center-div text-2xl">
-                        Fetching News...
+                        Fetching News, Please wait...
                     </div>
                 )
             }
@@ -107,7 +107,7 @@ function News() {
             }
             {
                 !articles && (
-                    <h2 className="center-div font-bold">Sorry there seems to be fetching error. Please visit <span><a href="https://gnews.io" target="_blank" rel="noreferrer" className="text-blue-500 hover:text-red-500">GNews Website</a></span></h2>
+                    <h2 className="center-div font-bold text-center p-2">Sorry there seems to be fetching error. Please visit <span><a href="https://gnews.io" target="_blank" rel="noreferrer" className="text-blue-500 hover:text-red-500">GNews Website</a></span></h2>
                 )
             }
         </>

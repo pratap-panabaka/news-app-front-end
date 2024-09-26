@@ -58,7 +58,7 @@ const Headlines = () => {
             {
                 loading && (
                     <div className="center-div text-2xl">
-                        Fetching Headlines...
+                        Fetching News, Please wait...
                     </div>
                 )
             }
