@@ -58,7 +58,7 @@ const Headlines = () => {
             {
                 loading && (
                     <div className="center-div text-2xl">
-                        Fetching News, Please wait...
+                        Fetching Headlines, Please wait...
                     </div>
                 )
             }
@@ -113,7 +113,7 @@ const Headlines = () => {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="flex gap-5">
+                                    <div className="flex flex-col tablet:flex-row gap-2 w-full">
                                         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="placeholder:text-black/20 p-2 flex justify-center" />
                                         <button type="submit" className="btn">Search Headlines</button>
                                     </div>

@@ -63,7 +63,7 @@ function News() {
             {
                 articles && (
                     <div className='max-width center-div justify-start flex gap-2 p-2'>
-                        <form className="bg-toolite w-full" onSubmit={onSearch}>
+                        <form className="w-full" onSubmit={onSearch}>
                             <div className="border p-2 justify-start flex flex-col gap-5 items-center">
                                 <div className="flex flex-col gap-5 desktop:items-center">
                                     <div className="flex flex-col desktop:flex-row gap-5">
@@ -94,8 +94,8 @@ function News() {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="flex gap-5">
-                                        <input required type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="text-center placeholder:text-black/20 px-2 flex justify-center" />
+                                    <div className="flex flex-col tablet:flex-row gap-2">
+                                        <input required type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="ex: software" className="text-center placeholder:text-black/20 p-2 flex justify-center" />
                                         <button type="submit" className="btn">Search News</button>
                                     </div>
                                 </div>
